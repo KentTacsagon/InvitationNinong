@@ -61,31 +61,32 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
-            min-height: 100px;
+            min-height: 120px;
         }
 
-        #yesBtn {
-            background-color: #66bb6a;
-            color: white;
-            border: none;
+        button {
             padding: 15px 35px;
             font-size: 18px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s ease;
+            border: none;
+            transition: all 0.1s ease;
+        }
+
+        #yesBtn {
+            background-color: #66bb6a;
+            color: white;
+            z-index: 1000;
         }
 
         #noBtn {
             background-color: #ef5350;
             color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
         }
 
+        #form-section { display: none; }
+        
         #rsvp-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
         
         input[type="text"] {
@@ -98,14 +99,10 @@
         .submit-btn {
             background-color: #1976d2;
             color: white;
-            border: none;
             padding: 15px;
             border-radius: 12px;
             font-weight: bold;
-            cursor: pointer;
         }
-
-        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -126,12 +123,12 @@
             <p>I'd love for you to be part of my big day! 🙏</p>
             
             <div class="buttons">
-                <button id="yesBtn" onclick="showForm()">YES!</button>
-                <button id="noBtn" onclick="growYes()">No</button>
+                <button id="yesBtn">YES!</button>
+                <button id="noBtn">No</button>
             </div>
         </div>
 
-        <div id="form-section" class="hidden">
+        <div id="form-section">
             <h1>Yehey! 🕊️</h1>
             <p>I'm so excited! Please enter your name so I can list you down.</p>
             <form id="rsvp-form" action="https://formspree.io/f/xojkvpyq" method="POST">
@@ -142,30 +139,34 @@
     </div>
 
     <script>
-        let yesSize = 18;
-        let paddingLevel = 15;
-
-        function growYes() {
+        // Use DOMContentLoaded to ensure the page is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
             const yesBtn = document.getElementById('yesBtn');
             const noBtn = document.getElementById('noBtn');
-            
-            // Make Yes bigger
-            yesSize += 35; 
-            yesBtn.style.fontSize = yesSize + "px";
-            
-            // Increase padding
-            paddingLevel += 15;
-            yesBtn.style.padding = paddingLevel + "px " + (paddingLevel * 2) + "px";
+            const questionSection = document.getElementById('question-section');
+            const formSection = document.getElementById('form-section');
 
-            // Funny rejection phrases
-            const phrases = ["Wrong choice!", "Think of the handaan!", "Ninong, please!", "Katkat is waiting!", "Error: Access Denied"];
-            noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-        }
+            let yesSize = 18;
+            let paddingLevel = 15;
 
-        function showForm() {
-            document.getElementById('question-section').style.display = 'none';
-            document.getElementById('form-section').style.display = 'block';
-        }
+            // Grow Yes logic
+            noBtn.addEventListener('click', function() {
+                yesSize += 35;
+                paddingLevel += 15;
+                
+                yesBtn.style.fontSize = yesSize + "px";
+                yesBtn.style.padding = paddingLevel + "px " + (paddingLevel * 2) + "px";
+
+                const phrases = ["Wrong choice!", "Think of the handaan!", "Ninong, please!", "Katkat is waiting!", "Error: Access Denied"];
+                noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+            });
+
+            // Show Form logic
+            yesBtn.addEventListener('click', function() {
+                questionSection.style.display = 'none';
+                formSection.style.display = 'block';
+            });
+        });
     </script>
 </body>
 </html>
