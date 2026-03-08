@@ -17,7 +17,6 @@
                         radial-gradient(circle at 50% 50%, #e3f2fd 0%, #ffffff 100%);
             text-align: center;
             padding: 20px;
-            overflow-x: hidden;
         }
 
         #container {
@@ -62,7 +61,7 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
-            min-height: 80px;
+            min-height: 100px;
         }
 
         #yesBtn {
@@ -74,7 +73,7 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            z-index: 999;
+            transition: all 0.2s ease;
         }
 
         #noBtn {
@@ -134,4 +133,39 @@
 
         <div id="form-section" class="hidden">
             <h1>Yehey! 🕊️</h1>
-            <p>I'm so excited! Please enter your name
+            <p>I'm so excited! Please enter your name so I can list you down.</p>
+            <form id="rsvp-form" action="https://formspree.io/f/xojkvpyq" method="POST">
+                <input type="text" name="ninong_name" placeholder="Enter your full name" required>
+                <button type="submit" class="submit-btn">Confirm RSVP</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let yesSize = 18;
+        let paddingLevel = 15;
+
+        function growYes() {
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            
+            // Make Yes bigger
+            yesSize += 35; 
+            yesBtn.style.fontSize = yesSize + "px";
+            
+            // Increase padding
+            paddingLevel += 15;
+            yesBtn.style.padding = paddingLevel + "px " + (paddingLevel * 2) + "px";
+
+            // Funny rejection phrases
+            const phrases = ["Wrong choice!", "Think of the handaan!", "Ninong, please!", "Katkat is waiting!", "Error: Access Denied"];
+            noBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+        }
+
+        function showForm() {
+            document.getElementById('question-section').style.display = 'none';
+            document.getElementById('form-section').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
